@@ -1,0 +1,15 @@
+deployments:
+  osm:
+    filename:
+      ./docker/docker-compose.yml
+    install:
+      - cp config/example.storage.yml config/storage.yml
+      - cp docker/database.yml config/database.yml
+      - cp config/settings.yml config/settings.local.yml
+      - docker-compose -f docker/docker-compose.yml up -d
+      - docker-compose -f docker/docker-compose.yml exec web bundle exec rake db:migrate
+      - docker-compose -f docker/docker-compose.yml exec web bundle exec rake yarn:install
+    pre_launch:
+      - target: osm
+        command: docker-compose -f docker/docker-compose.yml exec web bundle exec rake test:db
+        options:
