@@ -9,7 +9,9 @@ deployments:
       - docker-compose -f docker/docker-compose.yml up -d
       - docker-compose -f docker/docker-compose.yml exec web bundle exec rake db:migrate
       - docker-compose -f docker/docker-compose.yml exec web bundle exec rake yarn:install
+      - docker-compose -f docker/docker-compose.yml exec web bundle exec rake test:db
+      - docker-compose -f docker/docker-compose.yml exec web bin/rails db:migrate RAILS_ENV=development
     pre_launch:
       - target: osm
-        command: docker-compose -f docker/docker-compose.yml exec web bundle exec rake test:db
+        command:
         options:
