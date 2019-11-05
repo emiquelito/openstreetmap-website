@@ -1,0 +1,8 @@
+deployments:
+  osm:
+    filename:
+      ./docker/docker-compose.yml
+    copy_files:
+      - ~/code/config/example.storage.yml ~/code/config/storage.yml
+      - ~/code/docker/database.yml ~/code/config/database.yml
+      - ~/code/config/settings.yml ~/code/config/settings.local.yml
